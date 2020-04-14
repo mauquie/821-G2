@@ -16,4 +16,22 @@ class SiteController extends AbstractController
             'controller_name' => 'SiteController',
         ]);
     }
+    /**
+     * @Route("/agenda", name="agenda")
+     */
+    public function agenda()
+    {
+        return $this->render('site/agenda.html.twig', [
+            'controller_name' => 'SiteController',
+        ]);
+    }
+    /**
+     * @Route("/promo", name="promo")
+     */
+    public function promo()
+    {
+        return $this->render('site/promo.html.twig', [
+            'controller_name' => 'SiteController',
+        ]);
+    }
 }
