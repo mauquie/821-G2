@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User 
+class User implements UserInterface
 {
     /**
      * @ORM\Id()
@@ -85,4 +85,19 @@ class User
 
         return $this;
     }
+    
+    public function getSalt()
+    {
+        
+    }
+    
+    public function getRoles()
+    {
+        return ['ROLE_USER'];
+    }
+    
+    public function eraseCredentials()
+    {
+    }
+    
 }

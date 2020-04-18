@@ -25,8 +25,8 @@ class SecurityController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) //si le form est envoyé:
         {
             
-            //$password = $encoder->encodePassword($user, $user->getPassword());
-            //$user->setPassword($password);
+            $password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
             
             $manager->persist($user); //persiste l’info dans le temps
             $manager->flush(); //envoie les info à la BDD
