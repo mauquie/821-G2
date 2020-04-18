@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email already taken")
+ * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User
+class User 
 {
     /**
      * @ORM\Id()
@@ -18,20 +23,27 @@ class User
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max=250,maxMessage="Please less 250 characters")
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
     private $email;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(max=250,maxMessage="Please less 250 characters")
+     * @Assert\NotBlank()
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=8,minMessage="Please over 8 characters")
      */
     private $password;
     
-    public $confirm_password; 
+
     
     public function getId(): ?int
     {
