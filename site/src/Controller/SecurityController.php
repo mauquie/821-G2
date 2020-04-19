@@ -9,6 +9,7 @@ use App\Form\RegistrationType;
 use Symfony\Component\HttpFoundation\Request;  //ajout du request
 use Doctrine\Persistence\ObjectManager; //ajout du manager
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface; // ajout de l'encoder
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
@@ -30,9 +31,28 @@ class SecurityController extends AbstractController
             
             $manager->persist($user); //persiste l’info dans le temps
             $manager->flush(); //envoie les info à la BDD
+            
+            return $this->redirectToRoute('login');
         }
         
         return $this->render('security/index.html.twig', [ 'form' => $form->createView() ]);
         
     }
+    /**
+     * @Route("/login", name="login")
+     */
+    public function login()
+    {
+        
+        return $this->render('security/login.html.twig');
+    }
+    
+    /**
+     * @Route("/deconnexion", name="security_logout")
+     */
+    public function logout()
+    {
+        
+    }    
+    
 }
