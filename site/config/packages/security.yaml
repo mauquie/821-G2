@@ -45,8 +45,12 @@ security:
     access_control:
         # ROLE_EDITOR: ROLE_USER
         # ROLE_ADMIN: ROLE_EDITOR
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
+        
+    role_hierarchy:
+        ROLE_USER: ROLE_USER
+        ROLE_ADMIN: ROLE_ADMIN
     encoders:
         App\Entity\User:
             algorithm: bcrypt

@@ -16,13 +16,21 @@
     	<div class="no-account">
     		<p>CONNECT TO YOUR ACCOUNT BEFORE CHECK AGENDA</p>
     		
-            <button type="button" class ="btn btn-success" onclick="window.open('/login'); return false;">Connexion</button>
+            <button type="button" class ="btn btn-success" onclick='/login'; return false;">Connexion</button>
     	</div>
     {% else %}
+    	{% if app.user.roles[0] == 'ROLE_ADMIN' %}
         <div class="example-wrapper">
-            <h1>HELLO YOU ARE IN AGENDA</h1>    
+            <h1>HELLO YOU ARE AN ADMIN</h1>    
             
             <p>THIS IS THE DEFAULT PAGE OF AGENDA</p>
         </div>
+        {% else %}
+        <div class="example-wrapper">
+            <h1>HELLO YOU ARE AN USER</h1>    
+            
+            <p>THIS IS THE DEFAULT PAGE OF AGENDA</p>
+        </div>
+        {% endif %}
     {% endif %}
 {% endblock %}
