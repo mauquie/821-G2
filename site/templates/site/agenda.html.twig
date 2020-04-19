@@ -16,7 +16,7 @@
     	<div class="no-account">
     		<p>CONNECT TO YOUR ACCOUNT BEFORE CHECK AGENDA</p>
     		
-            <button type="button" class ="btn btn-success" onclick='/login'; return false;">Connexion</button>
+            <button type="button" class ="btn btn-success" onclick=self.location.href='/login'; return false;">Connexion</button>
     	</div>
     {% else %}
     	{% if app.user.roles[0] == 'ROLE_ADMIN' %}
