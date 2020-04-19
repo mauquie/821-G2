@@ -6,11 +6,23 @@
 <style>
     .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    
+    .no-account { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .no-account code { background: #F5F5F5; padding: 2px 6px; }
+    
 </style>
 
-<div class="example-wrapper">
-    <h1>HELLO YOU ARE IN AGENDA</h1>    
-    
-    <p>THIS IS THE DEFAULT PAGE OF AGENDA</p>
-</div>
+    {% if not app.user %}
+    	<div class="no-account">
+    		<p>CONNECT TO YOUR ACCOUNT BEFORE CHECK AGENDA</p>
+    		
+            <button type="button" class ="btn btn-success" onclick="window.open('/login'); return false;">Connexion</button>
+    	</div>
+    {% else %}
+        <div class="example-wrapper">
+            <h1>HELLO YOU ARE IN AGENDA</h1>    
+            
+            <p>THIS IS THE DEFAULT PAGE OF AGENDA</p>
+        </div>
+    {% endif %}
 {% endblock %}
