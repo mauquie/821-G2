@@ -108,5 +108,5 @@ class User implements UserInterface
     public function eraseCredentials()
     {
     }
-    
+     
 }
