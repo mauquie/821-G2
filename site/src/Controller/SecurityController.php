@@ -53,6 +53,16 @@ class SecurityController extends AbstractController
     public function logout()
     {
         
-    }    
+    } 
     
+    /**
+     * @Route("/settings", name="settings")
+     */
+    public function settings()
+    {
+        setEmail($_POST['_email']);
+        setUsername($_POST['_username']);
+        
+        return $this->render('site/account.html.twig');
+    }
 }

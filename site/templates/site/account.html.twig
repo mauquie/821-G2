@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	 <div class="example-wrapper">
+            <h1>ACCOUNT</h1>    
+            
+            <p>Username: {{ app.user.Username }}</p>
+            <p>Email: {{ app.user.Email }}</p>
+            <p>Roles: {{ app.user.Roles[0] }}</p>
+            
+            <br > <br >
+            
+            <form action={{ path('settings') }} method="post">
+            	<div class="form-group">
+                    <input placeholder="Mail change" name="_mail" type="email" class="form-control">
+                </div>
+                
+       		  	<div class="form-group">
+                    <input placeholder="Username Change" name="_username" type="username" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <input placeholder="Password" name="_password" type="password" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Change</button>
+                </div>
+        
+            </form>       
+        </div>
+{% endblock %}
