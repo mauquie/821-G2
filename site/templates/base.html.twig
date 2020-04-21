@@ -38,6 +38,9 @@
               <li class="nav-item">
               	<a class = "nav-link" href="/booking">MODIF</a>
               </li>
+               <li class="nav-item">
+              	<a class = "nav-link" href="/admin/users">GESTION</a>
+              </li>
               {% endif %}
              </ul>
     
@@ -51,7 +54,7 @@
               </li>
               {% else %}
               <li class="nav-item">
-              	<a class="navbar-text">{{ app.user.Email }}</a>
+              	<a class="nav-link" href= "/account">{{ app.user.Email }}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ path('logout') }}">Deconnexion</a>
