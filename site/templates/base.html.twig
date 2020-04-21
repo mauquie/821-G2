@@ -34,6 +34,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="/promo">PROMO</a>
               </li>
+              {% if app.user and app.user.roles[0] == 'ROLE_ADMIN'  %}
+              <li class="nav-item">
+              	<a class = "nav-link" href="/booking">MODIF</a>
+              </li>
+              {% endif %}
              </ul>
     
              <ul class="navbar-nav mr-right">
