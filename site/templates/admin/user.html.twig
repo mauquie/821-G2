@@ -2,7 +2,7 @@
 {%block title%}ListedesUtilisateurs{%endblock%}
 
 {%block body%}
-    <h1>LitsedesUtilisateurs</h1>
+    <h1>Litse des Utilisateurs</h1>
     <table id="users"class="tabletable-striped">
         <thead>
             <tr>
@@ -25,11 +25,16 @@
         						Editor
         					{%  elseif role=="ROLE_ADMIN" %}
         						Admin Editor
+        						{% set admin = 1 %}
         					{%  endif %}
         				{% endfor %}     
         			</td>
         			<td>
+        				{% if admin==0 %}
         				<a href="{{ path('admin_set_users', {'id': user.id }) }}" class="btn btn-dark">Modifier</a>
+        				{%  else  %}
+        					{% set admin = 0 %}
+        				{%  endif %}
         			</td>
         		</tr>
         	{% endfor %}	

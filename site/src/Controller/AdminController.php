@@ -28,13 +28,15 @@ class AdminController extends AbstractController
      */
     public function usersList(UserRepository $user)
     {
+        $admin=0;
         return $this->render('admin/user.html.twig', [
             'users' => $user->findAll(),
+            'admin' => $admin, // test if it's admin
         ]);
     }
     
     /**
-     * @Route("/utilisateurs/modifier/{id}", name="set_users")
+     * @Route("/users/modifcation/{id}", name="set_users")
      */
     public function editUser(Request $request, User $user, EntityManagerInterface $entity_manager)
     {
