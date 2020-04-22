@@ -27,8 +27,8 @@
     </table>
 
     <a href="{{ path('booking_index') }}">back to list</a>
-
-    <a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>
-
-    {{ include('booking/_delete_form.html.twig') }}
+	{% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
+    	<a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>
+        {{ include('booking/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}

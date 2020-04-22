@@ -9,6 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/booking")
@@ -35,6 +37,7 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/new", name="booking_new", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_EDITOR')")
      */
     public function new(Request $request): Response
     {
@@ -68,6 +71,7 @@ class BookingController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="booking_edit", methods={"GET","POST"})
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_EDITOR')")
      */
     public function edit(Request $request, Booking $booking): Response
     {

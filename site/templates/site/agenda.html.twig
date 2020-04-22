@@ -17,12 +17,21 @@
             <h1>HELLO YOU ARE AN ADMIN</h1>    
             
             <p>THIS IS THE DEFAULT PAGE OF AGENDA</p>
+            <button type="button" class ="btn btn-success" onclick=self.location.href='/booking/'; return false;">Agenda</button>
+        </div>
+        {% elseif app.user.roles[0] == 'ROLE_EDITOR' %}
+        	<div class="example-wrapper">
+            <h1>HELLO YOU ARE AN EDITOR</h1>    
+            
+            <p>THIS IS THE DEFAULT PAGE OF AGENDA</p>
+            <button type="button" class ="btn btn-success" onclick=self.location.href='/booking/'; return false;">Agenda</button>
         </div>
         {% else %}
         <div class="example-wrapper">
             <h1>HELLO YOU ARE AN USER</h1>    
             
             <p>THIS IS THE DEFAULT PAGE OF AGENDA</p>
+            <button type="button" class ="btn btn-success" onclick=self.location.href='/booking/calendar'; return false;">Agenda</button>
         </div>
         {% endif %}
     {% endif %}
