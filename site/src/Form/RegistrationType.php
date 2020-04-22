@@ -34,3 +34,4 @@ class RegistrationType extends AbstractType
         ));
     }
 }
+

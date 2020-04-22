@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <a href="{{ path('booking_new') }}">Create new booking</a>
-	<a href="/booking">Open Table</a>
+    <button type="button" class ="btn btn-success" onclick=self.location.href='{{ path('booking_new') }}'; return false;">Create New</button>
+    <button type="button" class ="btn btn-success" onclick=self.location.href='/booking'; return false;">Open Table</button>
 	
     <div id="calendar-holder"></div>
 {% endblock %}

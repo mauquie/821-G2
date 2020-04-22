@@ -56,13 +56,26 @@ class SecurityController extends AbstractController
     } 
     
     /**
-     * @Route("/settings", name="settings")
+     * @Route("/account", name="settings")
      */
-    public function settings()
+    public function account(Request $request, ObjectManager $manager,UserPasswordEncoderInterface $encoder)
     {
-        setEmail($_POST['_email']);
-        setUsername($_POST['_username']);
+        $user = $this->getUser();
+        $form = $this->createForm(RegistrationType::class, $user);
         
-        return $this->render('site/account.html.twig');
+        $form->handleRequest($request); //analyse la request
+        
+        if($form->isSubmitted() && $form->isValid()) //si le form est envoyé:
+        {
+
+            $password = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($password);
+            
+            $manager->persist($user); //persiste l’info dans le temps
+            $manager->flush(); //envoie les info à la BDD
+        }
+        
+        return $this->render('site/account.html.twig', [ 'form' => $form->createView() ]);
+       
     }
 }

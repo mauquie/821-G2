@@ -3,39 +3,43 @@
 
 {%block body%}
     <h1>Litse des Utilisateurs</h1>
-    <table id="users"class="tabletable-striped">
+    <table id="users" cellpadding=5 cellspacing=5 class="tabletable-striped">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>email</th>
-                <th>roles</th>
-                <th>Actions</th>
+       
+                    <th>Id</th>
+                    <th>email</th>
+                    <th>roles</th>
+                    <th>Actions</th>
+
             </tr>
         </thead>
         <tbody>
         	{% for user in users %}
         		<tr>
-        			<td> {{user.id}} </td>
-        			<td>{{user.email}}</td>
-        			<td>  
-        				{% for role in user.roles %}
-        					{% if role=="ROLE_USER" %}
-        						Utilisateur
-        					{% elseif role=="ROLE_EDITOR" %}
-        						Editor
-        					{%  elseif role=="ROLE_ADMIN" %}
-        						Admin Editor
-        						{% set admin = 1 %}
-        					{%  endif %}
-        				{% endfor %}     
-        			</td>
-        			<td>
-        				{% if admin==0 %}
-        				<a href="{{ path('admin_set_users', {'id': user.id }) }}" class="btn btn-dark">Modifier</a>
-        				{%  else  %}
-        					{% set admin = 0 %}
-        				{%  endif %}
-        			</td>
+        			
+            			<td> {{user.id}} </td>
+            			<td>{{user.email}}</td>
+            			<td>  
+            				{% for role in user.roles %}
+            					{% if role=="ROLE_USER" %}
+            						Utilisateur
+            					{% elseif role=="ROLE_EDITOR" %}
+            						Editor
+            					{%  elseif role=="ROLE_ADMIN" %}
+            						Admin Editor
+            						{% set admin = 1 %}
+            					{%  endif %}
+            				{% endfor %}     
+            			</td>
+            			<td>
+            				{% if admin==0 %}
+            				<a href="{{ path('admin_set_users', {'id': user.id }) }}" class="btn">Modifier</a>
+            				{%  else  %}
+            					{% set admin = 0 %}
+            				{%  endif %}
+            			</td>
+        			
         		</tr>
         	{% endfor %}	
         </tbody>

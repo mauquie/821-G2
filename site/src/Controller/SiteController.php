@@ -34,13 +34,5 @@ class SiteController extends AbstractController
             'controller_name' => 'SiteController',
         ]);
     }
-    /**
-     * @Route("/account", name="promo")
-     */
-    public function account()
-    {
-        return $this->render('site/account.html.twig', [
-            'controller_name' => 'SiteController',
-        ]);
-    }
+  
 }

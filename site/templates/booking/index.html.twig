@@ -35,7 +35,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('booking_new') }}">Create new</a>
-    <br >
-    <a href="/booking/calendar">Open calendar</a>
+    <button type="button" class ="btn btn-success" onclick=self.location.href='{{ path('booking_new') }}'; return false;">Create New</button>
+    <button type="button" class ="btn btn-success" onclick=self.location.href='/booking/calendar'; return false;">Open Calendar</button>
+    
 {% endblock %}
