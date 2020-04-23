@@ -32,16 +32,16 @@
               <li class="nav-item">
                 <a class="nav-link" href="/agenda">Agenda</a>
               </li>
-              
-              {% if app.user and app.user.roles[0] == 'ROLE_ADMIN' or app.user and app.user.roles[0] == 'ROLE_EDITOR' %}
+              <li class="nav-item">
+                <a class="nav-link" href="/promo">PROMO</a>
+              </li>
+               {% if app.user and app.user.Roles[0] == 'ROLE_ADMIN' %}
               <li class="nav-item">
               	<a class = "nav-link" href="/booking">MODIF</a>
               </li>
-                  {% if app.user and app.user.roles[0] == 'ROLE_ADMIN'  %}
-                      <li class="nav-item">
-                      	<a class = "nav-link" href="/admin/users">GESTION</a>
-                      </li>
-                  {% endif %}
+               <li class="nav-item">
+              	<a class = "nav-link" href="/admin/users">GESTION</a>
+              </li>
               {% endif %}
              </ul>
     

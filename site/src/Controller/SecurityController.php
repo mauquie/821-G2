@@ -6,10 +6,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\User;
 use App\Form\RegistrationType;
+use App\Form\ChangeSettings;
 use Symfony\Component\HttpFoundation\Request;  //ajout du request
 use Doctrine\Persistence\ObjectManager; //ajout du manager
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface; // ajout de l'encoder
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class SecurityController extends AbstractController
 {
@@ -58,24 +60,22 @@ class SecurityController extends AbstractController
     /**
      * @Route("/account", name="settings")
      */
-    public function account(Request $request, ObjectManager $manager,UserPasswordEncoderInterface $encoder)
+    public function account(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
-        $user = $this->getUser();
-        $form = $this->createForm(RegistrationType::class, $user);
+          $user = $this->getUser();
+          $form = $this->createForm(ChangeSettings::class, $user);
         
         $form->handleRequest($request); //analyse la request
+        $formAccount= $request->request->get('change_settings');
         
-        if($form->isSubmitted() && $form->isValid()) //si le form est envoyé:
+        if ($form->isSubmitted() && $form->isValid()) //si le form est envoyé:
         {
-
-            $password = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($password);
-            
-            $manager->persist($user); //persiste l’info dans le temps
-            $manager->flush(); //envoie les info à la BDD
+              $user->setUsername($formAccount['username']);
+              $user->setEmail($formAccount['email']);
+              $manager->persist($user); //persiste l’info dans le temps
+              $manager->flush(); //envoie les info à la BDD
         }
-        
         return $this->render('site/account.html.twig', [ 'form' => $form->createView() ]);
-       
+         
     }
 }
