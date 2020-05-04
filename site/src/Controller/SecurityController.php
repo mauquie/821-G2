@@ -12,6 +12,9 @@ use Doctrine\Persistence\ObjectManager; //ajout du manager
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface; // ajout de l'encoder
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Doctrine\ORM\EntityManagerInterface;
 
 class SecurityController extends AbstractController
 {
@@ -77,5 +80,24 @@ class SecurityController extends AbstractController
         }
         return $this->render('site/account.html.twig', [ 'form' => $form->createView() ]);
          
+    }
+    /**
+     * @Route("/changeStatus", name="changeStatus")
+     * @Security("is_granted('ROLE_ADMIN') or is_granted('ROLE_VIEWER')")
+     */
+    public function changeStatus( EntityManagerInterface $manager)
+    {
+        $user=$this->getUser();
+        $role = $user->getRoles();
+        if($role[0]=='ROLE_VIEWER'){
+            $user->setRoles( array('ROLE_ADMIN') );
+            $manager->persist($user);
+            $manager->flush(); //envoie les info à la BDD            
+        }   
+        else{
+            $user->setRoles( array('ROLE_VIEWER') );
+            $manager->flush(); //envoie les info à la BDD   
+        }
+        return $this->redirectToRoute('home');
     }
 }

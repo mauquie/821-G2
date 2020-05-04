@@ -38,14 +38,14 @@ class AdminController extends AbstractController
     /**
      * @Route("/users/modifcation/{id}", name="set_users")
      */
-    public function editUser(Request $request, User $user, EntityManagerInterface $entity_manager)
+    public function editUser(Request $request, User $user, EntityManagerInterface $manager)
     {
         
         $form = $this->createForm(EditUserType::class, $user);
         
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
-            $entity_manager->flush();
+            $manager->flush();
             
             return $this->redirectToRoute('admin_interface_users');
         }

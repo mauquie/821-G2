@@ -7,9 +7,18 @@
             
             <p>Username: {{ app.user.Username }}</p>
             <p>Email: {{ app.user.Email }}</p>
-           	<p>Roles: {{ app.user.Roles[0] }}
+           	<p>
+           		Roles: {{ app.user.Roles[0] }}
+           		{% if app.user.Roles[0]=='ROLE_VIEWER' or app.user.Roles[0]=='ROLE_ADMIN' %}
+           		    {% if app.user.Roles[0]=='ROLE_VIEWER' %}
+           				<a href="/changeStatus">Change status</a>
+           			{% else  %}
+           				<a href="/changeStatus" >Change status</a>
+                    {% endif %}
+           		{% endif %}
+           	</p>
             
-            <br > <br >          
+            <br >         
             <h1>CHANGE SETTINGS</h1>
 
     		{{ form_start(form) }}
