@@ -15,6 +15,7 @@ class BookingType extends AbstractType
             ->add('beginAt')
             ->add('endAt')
             ->add('title')
+            ->add('description')
         ;
     }
 

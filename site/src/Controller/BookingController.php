@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Validator\Constraints as Assert;
+use \DateTime;
 
 /**
  * @Route("/booking")
@@ -42,10 +44,18 @@ class BookingController extends AbstractController
     public function new(Request $request): Response
     {
         $booking = new Booking();
+        $date = new DateTime();  
+        //echo $date->format("Y-m-d H:i:s");
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
-
+        $user = $this->getUser();
+        
         if ($form->isSubmitted() && $form->isValid()) {
+            $booking->setCreator($user->getUsername());
+            $booking->setDateCreation($date->format("Y-m-d H:i:s"));
+            $booking->setLastModification($date->format("Y-m-d H:i:s"));
+            $booking->setEditors(array ($user->getUsername()));
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($booking);
             $entityManager->flush();
@@ -77,8 +87,13 @@ class BookingController extends AbstractController
     {
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
+        $date = new DateTime(); 
+        $user = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $booking->setLastModification($date->format("Y-m-d H:i:s"));
+            $booking->setEditors(array ($user->getUsername()));
+            
             $this->getDoctrine()->getManager()->flush();
 
             return $this->redirectToRoute('booking_index');

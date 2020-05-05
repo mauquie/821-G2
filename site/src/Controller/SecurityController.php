@@ -91,13 +91,12 @@ class SecurityController extends AbstractController
         $role = $user->getRoles();
         if($role[0]=='ROLE_VIEWER'){
             $user->setRoles( array('ROLE_ADMIN') );
-            $manager->persist($user);
-            $manager->flush(); //envoie les info à la BDD            
         }   
         else{
             $user->setRoles( array('ROLE_VIEWER') );
-            $manager->flush(); //envoie les info à la BDD   
         }
+        $manager->persist($user);
+        $manager->flush(); //envoie les info à la BDD 
         return $this->redirectToRoute('home');
     }
 }
