@@ -7,12 +7,12 @@
 
     <table class="table">
         <thead>
-            <tr align="middle">
-                <th> Id </th>
-                <th> Date de debut </th>
-                <th> Date de fin </th>
-                <th> Titre </th>
-                <th> Actions </th>
+            <tr>
+                <th>Id</th>
+                <th>BeginAt</th>
+                <th>EndAt</th>
+                <th>Title</th>
+                <th>actions</th>
             </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
                 <td>
                     <a href="{{ path('booking_show', {'id': booking.id}) }}">show</a>
                     {% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
-                    	<a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>
+                        <a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>
                     {% endif %}
                 </td>
             </tr>
@@ -36,8 +36,8 @@
         {% endfor %}
         </tbody>
     </table>
-	{% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
-    	<button type="button" class ="btn btn-success" onclick=self.location.href='{{ path('booking_new') }}'; return false;">Create New</button>
+    {% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
+        <button type="button" class ="btn btn-success" onclick=self.location.href='{{ path('booking_new') }}'; return false;">Create New</button>
     {% endif %}
     <button type="button" class ="btn btn-success" onclick=self.location.href='/booking/calendar'; return false;">Open Calendar</button>
     

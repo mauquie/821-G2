@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <th> Date de creation </th>
-                <td>  </td>
+                <td> {{ booking.getDateCreation() }}</td>
             </tr>
             <tr>
                 <th> Date de debut </th>
@@ -25,7 +25,7 @@
             </tr>
             <tr>
                 <th> Date de modification </th>
-                <td>  </td>
+                <td>  {{ booking.getLastModification() }}</td>
             </tr>
             <tr>
                 <th> Description </th>
@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <th> Photo </th>
-                <td> {{ booking.photo }} <img src="..\..\..\public\uploads\" width=100 height=50 /> </td>
+                <td>  <img src="{{ asset('uploads/' ~ booking.photo) }}"></></td>
             </tr>
             <tr>
                 <th> Titre </th>
