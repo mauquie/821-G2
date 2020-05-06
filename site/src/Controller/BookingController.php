@@ -12,6 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\FileType; 
 use \DateTime;
 
 /**
@@ -56,6 +57,12 @@ class BookingController extends AbstractController
             $booking->setLastModification($date->format("Y-m-d H:i:s"));
             $booking->setEditors(array ($user->getUsername()));
             
+            $file = $booking->getPhoto();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('upload_directory'), $fileName);
+            $booking->setPhoto($fileName); 
+            
+            
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($booking);
             $entityManager->flush();
@@ -93,6 +100,12 @@ class BookingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $booking->setLastModification($date->format("Y-m-d H:i:s"));
             $booking->setEditors(array ($user->getUsername()));
+            
+            $file = $booking->getPhoto();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move($this->getParameter('upload_directory'), $fileName);
+            $booking->setPhoto($fileName); 
+            
             
             $this->getDoctrine()->getManager()->flush();
 

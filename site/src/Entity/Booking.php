@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Mapping\ClassMetadata;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\BookingRepository")
@@ -55,6 +57,12 @@ class Booking
      * @ORM\Column(type="json")
      */
     private $editors = [];
+    
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     */
+    private $photo; 
 
     public function getId(): ?int
     {
@@ -166,4 +174,14 @@ class Booking
         
         return $this;
     }
+    
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+    public function setPhoto($photo) 
+    {
+        $this->photo = $photo;
+        return $this;
+    } 
 }

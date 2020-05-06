@@ -6,6 +6,8 @@ use App\Entity\Booking;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\HttpFoundation\File\File;
 
 class BookingType extends AbstractType
 {
@@ -16,6 +18,7 @@ class BookingType extends AbstractType
             ->add('endAt')
             ->add('title')
             ->add('description')
+            ->add('photo', FileType::class, array('data_class' => null,'label' => 'Photo (png, jpeg)'))
         ;
     }
 
