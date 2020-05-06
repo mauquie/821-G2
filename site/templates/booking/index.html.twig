@@ -7,20 +7,28 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>BeginAt</th>
-                <th>EndAt</th>
-                <th>Title</th>
-                <th>actions</th>
+            <tr align="middle">
+                <th> Id </th>
+                <th> Date de creation </th>
+                <th> Date de debut </th>
+                <th> Date de fin </th>
+                <th> Derniere modification </th>
+                <th> Description </th>
+                <th> Photo </th>
+                <th> Titre </th>
+                <th> Actions </th>
             </tr>
         </thead>
         <tbody>
         {% for booking in bookings %}
             <tr>
                 <td>{{ booking.id }}</td>
+                <td> </td>
                 <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td> </td>
+                <td> {{ booking.description }} </td>
+                <td> {{ booking.photo }} </td>
                 <td>{{ booking.title }}</td>
                 <td>
                     <a href="{{ path('booking_show', {'id': booking.id}) }}">show</a>

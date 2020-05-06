@@ -8,19 +8,35 @@
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th> Id </th>
                 <td>{{ booking.id }}</td>
             </tr>
             <tr>
-                <th>BeginAt</th>
+                <th> Date de creation </th>
+                <td>  </td>
+            </tr>
+            <tr>
+                <th> Date de debut </th>
                 <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>EndAt</th>
+                <th> Date de fin </th>
                 <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th>Title</th>
+                <th> Date de modification </th>
+                <td>  </td>
+            </tr>
+            <tr>
+                <th> Description </th>
+                <td> {{ booking.description }} </td>
+            </tr>
+            <tr>
+                <th> Photo </th>
+                <td> {{ booking.photo }} <img src="..\..\..\public\uploads\" width=100 height=50 /> </td>
+            </tr>
+            <tr>
+                <th> Titre </th>
                 <td>{{ booking.title }}</td>
             </tr>
         </tbody>
