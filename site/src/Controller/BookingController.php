@@ -50,18 +50,22 @@ class BookingController extends AbstractController
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
         $user = $this->getUser();
-        
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $booking->setCreator($user->getUsername());
             $booking->setDateCreation($date->format("Y-m-d H:i:s"));
             $booking->setLastModification($date->format("Y-m-d H:i:s"));
             $booking->setEditors(array ($user->getUsername()));
-            
             $file = $booking->getPhoto();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('upload_directory'), $fileName);
-            $booking->setPhoto($fileName); 
             
+            if ($file!=null){
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('upload_directory'), $fileName);
+                $booking->setPhoto($fileName); 
+            }
+            else{
+                $booking->setPhoto("NULL");
+            }
             
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($booking);
@@ -102,9 +106,14 @@ class BookingController extends AbstractController
             $booking->setEditors(array ($user->getUsername()));
             
             $file = $booking->getPhoto();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            $file->move($this->getParameter('upload_directory'), $fileName);
-            $booking->setPhoto($fileName); 
+            if ($file!=null){
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move($this->getParameter('upload_directory'), $fileName);
+                $booking->setPhoto($fileName);
+            }
+            else{
+                $booking->setPhoto("NULL");
+            }
             
             
             $this->getDoctrine()->getManager()->flush();
@@ -125,6 +134,7 @@ class BookingController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
+            //$result = $filesystem->delete($path);
             $entityManager->remove($booking);
             $entityManager->flush();
         }

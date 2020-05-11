@@ -18,7 +18,7 @@ class BookingType extends AbstractType
             ->add('endAt')
             ->add('title')
             ->add('description')
-            ->add('photo', FileType::class, array('data_class' => null,'label' => 'Photo (png, jpeg)'))
+            ->add('photo', FileType::class, array('data_class' => null,'label' => 'Photo (png, jpeg)','required' => false))
         ;
     }
 

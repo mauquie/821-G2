@@ -31,12 +31,14 @@
                 <th> Description </th>
                 <td> {{ booking.description }} </td>
             </tr>
-            <tr>
-                <th> Photo </th>
-                <td>  <img src="{{ asset('uploads/' ~ booking.photo) }}" style="max-width:50%; height:auto;"/></td>
-            </tr>
-            <tr>
-                <th> Titre </th>
+            {% if booking.photo is null  %}
+                <tr>
+                    <th> Photo </th>
+                    <td>  <img src="{{ asset('uploads/' ~ booking.photo) }}" style="max-width:50%; height:auto;"/> </td>
+                </tr>
+                <tr>
+           {% endif %}
+           <th> Titre </th>
                 <td>{{ booking.title }}</td>
             </tr>
         </tbody>
