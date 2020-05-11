@@ -31,7 +31,7 @@
                 <th> Description </th>
                 <td> {{ booking.description }} </td>
             </tr>
-            {% if booking.photo is null  %}
+            {% if booking.photo is not null  %}
                 <tr>
                     <th> Photo </th>
                     <td>  <img src="{{ asset('uploads/' ~ booking.photo) }}" style="max-width:50%; height:auto;"/> </td>

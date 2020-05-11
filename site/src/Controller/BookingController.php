@@ -13,6 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Form\Extension\Core\Type\FileType; 
+use Symfony\Component\Filesystem\Filesystem;
 use \DateTime;
 
 /**
@@ -96,6 +97,8 @@ class BookingController extends AbstractController
      */
     public function edit(Request $request, Booking $booking): Response
     {
+        $fileName = $booking->getPhoto();
+        
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
         $date = new DateTime(); 
@@ -104,6 +107,14 @@ class BookingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $booking->setLastModification($date->format("Y-m-d H:i:s"));
             $booking->setEditors(array ($user->getUsername()));
+            
+            $StrArray = ['../public/uploads/',$fileName];  //path of image
+            $pathStr = join("",$StrArray);
+            
+            if($fileName != "NULL" ){
+                $filesystem = new Filesystem();
+                $result = unlink($pathStr);
+            }
             
             $file = $booking->getPhoto();
             if ($file!=null){
@@ -134,7 +145,16 @@ class BookingController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$booking->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
-            //$result = $filesystem->delete($path);
+            
+            
+            $fileName = $booking->getPhoto();
+            $StrArray = ['../public/uploads/',$fileName];  //path of image 
+            $pathStr = join("",$StrArray);
+            
+            if($fileName != "NULL" ){
+                $filesystem = new Filesystem();
+                $result = unlink($pathStr);
+            }
             $entityManager->remove($booking);
             $entityManager->flush();
         }
