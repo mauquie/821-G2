@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Doctrine\ORM\EntityManagerInterface;
+use Monolog\Logger;
 
 class SecurityController extends AbstractController
 {
@@ -57,7 +58,8 @@ class SecurityController extends AbstractController
      */
     public function logout()
     {
-        
+        $this->logger = $this->getContainer()->get('monolog.logger');
+        $this->logger->info('test');
     } 
     
     /**
@@ -95,8 +97,18 @@ class SecurityController extends AbstractController
         else{
             $user->setRoles( array('ROLE_VIEWER') );
         }
-        $manager->persist($user);
-        $manager->flush(); //envoie les info à la BDD 
+        // générer un nouveau token
+        $token = new \Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken(
+            $user,
+            null,
+            'main',
+            $user->getRoles()
+            );
+        $this->container->get('security.context')->setToken($token);
+
+        // faire un refresh du user a l'aide du user manager
+        $userManager = $this->container->get('fos_user.user_manager');
+        $userManager->refreshUser($user);
         return $this->redirectToRoute('home');
     }
 }

@@ -60,7 +60,7 @@ class Booking
     
     /**
      * @ORM\Column(type="text")
-     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     * @Assert\File(mimeTypes={"image/png", "image/jpeg", "image/jpg", "image/svg+xml", "image/gif"})
      */
     private $photo; 
 

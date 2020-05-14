@@ -1,19 +1,27 @@
 monolog:
     handlers:
-        main:
+        filter_for_errors:
+            type: fingers_crossed
+            # if *one* log is error or higher, pass *all* to file_log
+            action_level: error
+            handler: error
+
+        # now passed *all* logs, but only if one log is error or higher
+        error:
             type: stream
-            path: "%kernel.logs_dir%/%kernel.environment%.log"
-            level: debug
-            channels: ["!event"]
-        # uncomment to get logging in your browser
-        # you may have to allow bigger header sizes in your Web server configuration
-        #firephp:
-        #    type: firephp
-        #    level: info
-        #chromephp:
-        #    type: chromephp
-        #    level: info
-        console:
-            type: console
-            process_psr_3_messages: false
-            channels: ["!event", "!doctrine", "!console"]
+            path: "%kernel.logs_dir%/error.log"
+
+        security:
+            type: rotating_file
+            path: "%kernel.logs_dir%/security.log"
+            level: info
+            channels: [security]
+            max_files: 10
+            
+        request:
+            type: rotating_file
+            path: "%kernel.logs_dir%/request.log"
+            level: info
+            channels: [request]
+            max_files: 10
+            

@@ -10,11 +10,7 @@
            	<p>
            		Roles: {{ app.user.Roles[0] }}
            		{% if app.user.Roles[0]=='ROLE_VIEWER' or app.user.Roles[0]=='ROLE_ADMIN' %}
-           		    {% if app.user.Roles[0]=='ROLE_VIEWER' %}
            				<a href="/changeStatus">Change status</a>
-           			{% else  %}
-           				<a href="/changeStatus" >Change status</a>
-                    {% endif %}
            		{% endif %}
            	</p>
             

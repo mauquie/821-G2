@@ -31,9 +31,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="/agenda">Agenda</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/promo">PROMO</a>
-              </li>
                {% if app.user and app.user.Roles[0] == 'ROLE_ADMIN' %}
               <li class="nav-item">
               	<a class = "nav-link" href="/booking">MODIF</a>
@@ -41,6 +38,7 @@
                <li class="nav-item">
               	<a class = "nav-link" href="/admin/users">GESTION</a>
               </li>
+              
               {% endif %}
              </ul>
     
