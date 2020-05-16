@@ -18,6 +18,7 @@ use \DateTime;
 
 /**
  * @Route("/booking")
+ * @Security("is_granted('ROLE_USER')")
  */
 class BookingController extends AbstractController
 {
