@@ -152,8 +152,11 @@ class SecurityController extends AbstractController
                 ->setFrom('no-reply@noreply.com')
                 ->setTo($mailToReset)
                 ->setBody(
-                            '<h1>Bonjour</h1><br><p>Une demande de reinitialisation de mot de passe a ete effectue: Veuillez cliquer sur le lien suivant: <a href='. $url .
-                            '>RESET</a>pour le reinisialiser</p>','text/html'
+                    $this->renderView(
+                        'emails/emails_reset.html.twig',
+                        ['email'=>$user->getEmail(),'path'=>$url]
+                        ),
+                        'text/html'
                     )
             ;
             
