@@ -70,7 +70,7 @@ class AdminController extends AbstractController
         
         $user->setPassword($mdp);
         
-        if ($form->isSubmitted() )  //si le form est envoyé:
+        if ($form->isSubmitted() && $form->isValid())  //si le form est envoyé:
             {
                 
             $password = $encoder->encodePassword($user, $mdp);
