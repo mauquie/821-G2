@@ -78,7 +78,7 @@ class AdminController extends AbstractController
             $manager->persist($user); //persiste l’info dans le temps
             $manager->flush(); //envoie les info à la BDD
             
-            $url = $this->generateUrl('login',[''],UrlGeneratorInterface::ABSOLUTE_URL);;
+            $url = $this->generateUrl('login',[''],UrlGeneratorInterface::ABSOLUTE_URL);
             
             $message = (new \Swift_Message('Reset password'))
             

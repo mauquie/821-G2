@@ -185,14 +185,13 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()){
             $user->setResetToken(null);
             
-            $password = $encoder->encodePassword($user, $user->getPassword()); //encode password
+            $password = $encoder->encodePassword($user, $form['password']->getData()); //encode password
             $user->setPassword($password);
             
             $manager->persist($user); //persiste l’info dans le temps
             $manager->flush(); //envoie les info à la BDD
             return $this->redirectToRoute('login');
-        }else{
-            return $this->render('security/set_new_password.html.twig', [ 'ResetForm' => $form->createView() ]);
         }
+        return $this->render('security/set_new_password.html.twig', [ 'ResetForm' => $form->createView() ]);
     }
 }
