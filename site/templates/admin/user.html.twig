@@ -2,15 +2,15 @@
 {%block title%}ListedesUtilisateurs{%endblock%}
 
 {%block body%}
-<button type="button" class ="btn btn-success" onclick=self.location.href='/admin/users/userCreation'; return false;">Creation</button>
-    <h1>Litse des Utilisateurs</h1>
+<button type="button" class ="btn btn-success" onclick=self.location.href='/admin/users/userCreation'; return false;">Create</button>
+    <h1>User index</h1>
     <table id="users" cellpadding=5 cellspacing=5 class="tabletable-striped">
         <thead>
             <tr>
        
                     <th>Id</th>
-                    <th>email</th>
-                    <th>roles</th>
+                    <th>Mail</th>
+                    <th>Roles</th>
                     <th>Actions</th>
 
             </tr>
@@ -24,7 +24,7 @@
             			<td>  
             				{% for role in user.roles %}
             					{% if role=="ROLE_USER" %}
-            						Utilisateur
+            						User
             					{% elseif role=="ROLE_EDITOR" %}
             						Editor
             					{%  elseif role=="ROLE_ADMIN" %}
@@ -35,7 +35,7 @@
             			</td>
             			<td>
             				{% if admin==0 %}
-            				<a href="{{ path('admin_set_users', {'id': user.id }) }}" class="btn">Modifier</a>
+            				<a href="{{ path('admin_set_users', {'id': user.id }) }}" class="btn">Edit</a>
             				{%  else  %}
             					{% set admin = 0 %}
             				{%  endif %}

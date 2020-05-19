@@ -12,19 +12,19 @@
                 <td>{{ booking.id }}</td>
             </tr>
             <tr>
-                <th> Date de creation </th>
+                <th> Creation date </th>
                 <td> {{ booking.getDateCreation() }}</td>
             </tr>
             <tr>
-                <th> Date de debut </th>
+                <th> Start date </th>
                 <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th> Date de fin </th>
+                <th> End date </th>
                 <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
-                <th> Date de modification </th>
+                <th> Editing date </th>
                 <td>  {{ booking.getLastModification() }}</td>
             </tr>
             <tr>
@@ -38,15 +38,15 @@
                 </tr>
                 <tr>
            {% endif %}
-           <th> Titre </th>
+           <th> Title </th>
                 <td>{{ booking.title }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('booking_index') }}">back to list</a>
+    <a href="{{ path('booking_index') }}">Back to list</a>
 	{% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
-    	<a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>
+    	<a href="{{ path('booking_edit', {'id': booking.id}) }}">Edit</a>
         {{ include('booking/_delete_form.html.twig') }}
     {% endif %}
 {% endblock %}

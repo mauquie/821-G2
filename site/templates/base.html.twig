@@ -33,10 +33,10 @@
               </li>
                {% if app.user and app.user.Roles[0] == 'ROLE_ADMIN' %}
               <li class="nav-item">
-              	<a class = "nav-link" href="/booking">MODIF</a>
+              	<a class = "nav-link" href="/booking">Edit</a>
               </li>
                <li class="nav-item">
-              	<a class = "nav-link" href="/admin/users">GESTION</a>
+              	<a class = "nav-link" href="/admin/users">Administration</a>
               </li>
               
               {% endif %}
@@ -45,10 +45,10 @@
              <ul class="navbar-nav mr-right">
               {% if not app.user %}
               <li class="nav-item">
-                <a class="nav-link" href="/inscription">ENREGISTREMENT</a>
+                <a class="nav-link" href="/inscription">Registration</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{ path('login') }}">Connexion</a>
+                <a class="nav-link" href="{{ path('login') }}">Log-in</a>
               </li>
               {% else %}
               <li class="nav-item">

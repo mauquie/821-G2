@@ -1,15 +1,15 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier Utilisateur{% endblock %}
+{% block title %}Edit User{% endblock %}
 
 {% block body %}
 
-	<h1>Modifier les droits d'un Utilisateur</h1>
+	<h1>Edit user rights</h1>
 	<br/>
 
     {{ form_start(formUser) }}
     {{ form_widget(formUser) }}
-     <button type="submit" class="btn btn-success">Modifier</button>
+     <button type="submit" class="btn btn-success">Edit</button>
     {{ form_end(formUser) }}
 
 {% endblock %}
