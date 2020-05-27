@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Booking index{% endblock %}
+{% block title %}Event index{% endblock %}
 
 {% block body %}
-    <h1>Booking index</h1>
+    <h1>Event index</h1>
 
     <table class="table">
         <thead>
@@ -16,16 +16,16 @@
             </tr>
         </thead>
         <tbody>
-        {% for booking in bookings %}
+        {% for event in events %}
             <tr>
-                <td>{{ booking.id }}</td>
-                <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ booking.title }}</td>
+                <td>{{ event.id }}</td>
+                <td>{{ event.beginAt ? event.beginAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ event.endAt ? event.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ event.title }}</td>
                 <td>
-                    <a href="{{ path('booking_show', {'id': booking.id}) }}">show</a>
+                    <a href="{{ path('event_show', {'id': event.id}) }}">show</a>
                     {% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
-                        <a href="{{ path('booking_edit', {'id': booking.id}) }}">edit</a>
+                        <a href="{{ path('event_edit', {'id': event.id}) }}">edit</a>
                     {% endif %}
                 </td>
             </tr>
@@ -37,8 +37,8 @@
         </tbody>
     </table>
     {% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
-        <button type="button" class ="btn btn-success" onclick=self.location.href='{{ path('booking_new') }}'; return false;">Create New</button>
+        <button type="button" class ="btn btn-success" onclick=self.location.href='{{ path('event_new') }}'; return false;">Create New</button>
     {% endif %}
-    <button type="button" class ="btn btn-success" onclick=self.location.href='/booking/calendar'; return false;">Open Calendar</button>
+    <button type="button" class ="btn btn-success" onclick=self.location.href='/event/calendar'; return false;">Open Calendar</button>
     
 {% endblock %}

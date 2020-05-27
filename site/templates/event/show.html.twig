@@ -1,52 +1,52 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Booking{% endblock %}
+{% block title %}Event{% endblock %}
 
 {% block body %}
-    <h1>Booking</h1>
+    <h1>Event</h1>
 
     <table class="table">
         <tbody>
             <tr>
                 <th> Id </th>
-                <td>{{ booking.id }}</td>
+                <td>{{ event.id }}</td>
             </tr>
             <tr>
                 <th> Creation date </th>
-                <td> {{ booking.getDateCreation() }}</td>
+                <td> {{ event.getCreateAt() }}</td>
             </tr>
             <tr>
                 <th> Start date </th>
-                <td>{{ booking.beginAt ? booking.beginAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ event.beginAt ? event.beginAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th> End date </th>
-                <td>{{ booking.endAt ? booking.endAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ event.endAt ? event.endAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th> Editing date </th>
-                <td>  {{ booking.getLastModification() }}</td>
+                <td>  {{ event.getEditAt() }}</td>
             </tr>
             <tr>
                 <th> Description </th>
-                <td> {{ booking.description }} </td>
+                <td> {{ event.description }} </td>
             </tr>
-            {% if booking.photo is not null  %}
+            {% if event.picture is not null  %}
                 <tr>
                     <th> Photo </th>
-                    <td>  <img src="{{ asset('uploads/' ~ booking.photo) }}" style="max-width:50%; height:auto;"/> </td>
+                    <td>  <img src="{{ asset('uploads/' ~ event.picture) }}" style="max-width:50%; height:auto;"/> </td>
                 </tr>
                 <tr>
            {% endif %}
            <th> Title </th>
-                <td>{{ booking.title }}</td>
+                <td>{{ event.title }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('booking_index') }}">Back to list</a>
+    <a href="{{ path('event_index') }}">Back to list</a>
 	{% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
-    	<a href="{{ path('booking_edit', {'id': booking.id}) }}">Edit</a>
-        {{ include('booking/_delete_form.html.twig') }}
+    	<a href="{{ path('event_edit', {'id': event.id}) }}">Edit</a>
+        {{ include('event/_delete_form.html.twig') }}
     {% endif %}
 {% endblock %}

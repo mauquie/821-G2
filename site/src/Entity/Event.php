@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EventRepository")
@@ -61,6 +62,7 @@ class Event
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\File(mimeTypes={"image/png", "image/jpeg", "image/jpg"})
      */
     private $picture;
 

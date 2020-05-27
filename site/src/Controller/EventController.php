@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -47,26 +48,23 @@ class EventController extends AbstractController
     public function new(Request $request): Response
     {
         $event = new Event();
-        $date = new DateTime();  
-        //echo $date->format("Y-m-d H:i:s");
+        $date = new DateTime(); 
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
         $user = $this->getUser();
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            $event->setCreator($user->getUsername());
-            $event->setDateCreation($date->format("Y-m-d H:i:s"));
-            $event->setLastModification($date->format("Y-m-d H:i:s"));
-            $event->setEditors(array ($user->getUsername()));
-            $file = $event->getPhoto();
+            $event->setCreator($user);
+            $event->setCreateAt($date->format("Y-m-d H:i:s"));
+            $event->setEditAt($date->format("Y-m-d H:i:s"));
+            $file = $form->get('picture')->getData();
             
             if ($file!=null){
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move($this->getParameter('upload_directory'), $fileName);
-                $event->setPhoto($fileName); 
+                $event->setPicture($fileName); 
             }
             else{
-                $event->setPhoto("NULL");
+                $event->setPicture("NULL");
             }
             
             $entityManager = $this->getDoctrine()->getManager();
@@ -98,8 +96,7 @@ class EventController extends AbstractController
      */
     public function edit(Request $request, Event $event): Response
     {
-        $fileName = $event->getPhoto();
-        
+        $fileName = $event->getPicture();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
         $date = new DateTime(); 
@@ -117,14 +114,14 @@ class EventController extends AbstractController
                 $result = unlink($pathStr);
             }
             
-            $file = $event->getPhoto();
+            $file = $event->getPicture();
             if ($file!=null){
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move($this->getParameter('upload_directory'), $fileName);
-                $event->setPhoto($fileName);
+                $event->setPicture($fileName);
             }
             else{
-                $event->setPhoto("NULL");
+                $event->setPicture("NULL");
             }
             
             
@@ -148,7 +145,7 @@ class EventController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             
             
-            $fileName = $event->getPhoto();
+            $fileName = $event->getPicture();
             $StrArray = ['../public/uploads/',$fileName];  //path of image 
             $pathStr = join("",$StrArray);
             

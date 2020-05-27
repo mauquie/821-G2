@@ -2,9 +2,9 @@
 
 {% block body %}
 	{% if app.user.roles[0] == 'ROLE_ADMIN' or app.user.roles[0] == 'ROLE_EDITOR' %}
-    	<button type="button" class ="btn btn-success" onclick=self.location.href='{{ path('booking_new') }}'; return false;">Create New</button>
+    	<button type="button" class ="btn btn-success" onclick=self.location.href='{{ path('event_new') }}'; return false;">Create New</button>
     {% endif %}
-    <button type="button" class ="btn btn-success" onclick=self.location.href='/booking'; return false;">Open Table</button>
+    <button type="button" class ="btn btn-success" onclick=self.location.href='/event'; return false;">Open Table</button>
 	
     <div id="calendar-holder"></div>
 {% endblock %}

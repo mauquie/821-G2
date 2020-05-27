@@ -25,3 +25,8 @@ monolog:
             channels: [request]
             max_files: 10
             
+        dev:
+            type: rotating_file
+            path: "%kernel.logs_dir%/debug.log"
+            max_files: 5
+            
