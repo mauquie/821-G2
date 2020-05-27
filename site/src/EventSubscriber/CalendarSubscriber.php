@@ -2,7 +2,7 @@
 
 namespace App\EventSubscriber;
 
-use App\Repository\BookingRepository;
+use App\Repository\EventRepository;
 use CalendarBundle\CalendarEvents;
 use CalendarBundle\Entity\Event;
 use CalendarBundle\Event\CalendarEvent;
@@ -11,14 +11,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CalendarSubscriber implements EventSubscriberInterface
 {
-    private $bookingRepository;
+    private $eventRepository;
     private $router;
 
     public function __construct(
-        BookingRepository $bookingRepository,
+        eventRepository $eventRepository,
         UrlGeneratorInterface $router
     ) {
-        $this->bookingRepository = $bookingRepository;
+        $this->eventRepository = $eventRepository;
         $this->router = $router;
     }
 
@@ -37,7 +37,7 @@ class CalendarSubscriber implements EventSubscriberInterface
 
         // Modify the query to fit to your entity and needs
         // Change booking.beginAt by your start date property
-        $bookings = $this->bookingRepository
+        $bookings = $this->eventRepository
             ->createQueryBuilder('booking')
             ->where('booking.beginAt BETWEEN :start and :end OR booking.endAt BETWEEN :start and :end')
             ->setParameter('start', $start->format('Y-m-d H:i:s'))
