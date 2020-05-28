@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %} 
+
+{% block body %} 
+   <a id = "test" href = "#">test</a>   
+
+
+{% endblock %}  
+
+{% block javascripts %}
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+	<script language = "javascript">  
+		jQuery( document ).ready(function( $ ){
+           $("#test").on("click", function(event){
+              alert('test OK'),
+              $.ajax({  
+                 url:        '/ajax',  
+                 type:       'POST',   
+                 dataType:   'json',  
+                 async:      true,  
+                 data: {id: '200 test OK'},
+               });
+           });  
+       	});  
+   </script>
+    
+{% endblock %}
