@@ -14,6 +14,12 @@ class SiteController extends AbstractController
      */
     public function index()
     {
+        $user = $this->getUser();
+        if($user){   // if connected         
+            if($user->getActivationToken() != null){
+                return $this->redirectToRoute('logout');
+            }
+        }
         return $this->render('site/index.html.twig', [
             'controller_name' => 'SiteController',
         ]);
