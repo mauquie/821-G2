@@ -27,7 +27,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/inscription", name="security_inscription")
      */
-    public function registration(Request $request, ObjectManager $manager,UserPasswordEncoderInterface $encoder)
+    public function registration(Request $request, ObjectManager $manager,UserPasswordEncoderInterface $encoder,\Swift_Mailer $mailer)
     {
         $user = new User();
         $form = $this->createForm(RegistrationType::class, $user);
@@ -40,8 +40,25 @@ class SecurityController extends AbstractController
             $password = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($password);
             
+            $user->setActivationToken(md5(uniqid()));
+            
+            
             $manager->persist($user); //persiste l’info dans le temps
             $manager->flush(); //envoie les info à la BDD
+            
+            $message = (new \Swift_Message('Activation de compte'))
+            
+            ->setFrom('no-reply@noreply.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->renderView(
+                    'emails/emails_delete_activation.html.twig',
+                    ['token'=>$user->getActivationToken()]
+                    ),
+                'text/html'
+                )
+                ;
+            $mailer->send($message);
             
             return $this->redirectToRoute('login');
         }
@@ -193,5 +210,37 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('login');
         }
         return $this->render('security/set_new_password.html.twig', [ 'ResetForm' => $form->createView() ]);
+    }
+    
+    /**
+     * @Route("/activation/{token}", name="activation")
+     */
+    public function activation($token, UserRepository $userRepo, ObjectManager $manager, \Swift_Mailer $mailer){
+        $user = $userRepo->findOneBy(['activation_token' => $token]);
+        
+        if ($user){
+            $user->setActivationToken(null);
+            
+            $manager->persist($user); //persiste l’info dans le temps
+            $manager->flush(); //envoie les info à la BDD
+            
+            $message = (new \Swift_Message('Activation de compte'))
+            
+            ->setFrom('no-reply@noreply.com')
+            ->setTo($user->getEmail())
+            ->setBody(
+                $this->renderView(
+                    'emails/emails_activation.html.twig'
+                    ),
+                'text/html'
+                )
+                ;
+            $mailer->send($message);
+        }else{
+            return $this->render('site/index.html.twig', [
+                'controller_name' => 'SiteController',
+            ]);
+        }
+        return $this->redirectToRoute('login');
     }
 }

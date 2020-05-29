@@ -14,6 +14,7 @@ use App\Form\ChangeSettings;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface; // ajout de l'encoder
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface; // ajout du générateur d'url
 
+
 /**
  * @Route("/admin", name="admin_")
  */
@@ -74,11 +75,19 @@ class AdminController extends AbstractController
             {
             $password = $encoder->encodePassword($user, $mdp);
             $user->setPassword($password);
-             
-            $manager->persist($user); //persiste l’info dans le temps
-            $manager->flush(); //envoie les info à la BDD
             
-            $url = $this->generateUrl('login',[''],UrlGeneratorInterface::ABSOLUTE_URL);
+            // New client must be reset his password to continue
+            $token = md5(uniqid());
+            $url = $this->generateUrl('app_reset_password',['token'=> $token],UrlGeneratorInterface::ABSOLUTE_URL);
+            
+            try{
+                $user->setResetToken($token);
+                $manager->persist($user); //persiste l’info dans le temps
+                $manager->flush(); //envoie les info à la BDD
+            }catch(\Exception $e){
+                $this->addFlash('warning', 'Une erreur est survenue: '.$e->getMessage());
+                return $this->redirectToRoute('resetPassword');
+            }          
             
             $message = (new \Swift_Message('Reset password'))
             
@@ -94,6 +103,8 @@ class AdminController extends AbstractController
             ;
             
             $mailer->send($message);
+            
+           
             
             return $this->redirectToRoute('admin_interface_users');
             }
