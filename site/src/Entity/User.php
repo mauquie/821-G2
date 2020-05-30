@@ -111,7 +111,12 @@ class User implements UserInterface
     
     public function setRoles(array $roles): self
     {
-        $this->roles = $roles;
+        $this->roles = null;
+        $this->roles = array();
+        foreach($roles as $role ){
+            $this->roles += $roles;
+            echo $role;
+        }                
         return $this;
     }
     
